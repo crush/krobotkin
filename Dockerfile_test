@@ -1,0 +1,14 @@
+FROM python:3.8
+
+WORKDIR /krobotkin
+
+COPY requirements.txt .
+COPY requirements_dev.txt .
+
+RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements_dev.txt
+
+COPY ./krobotkin ./krobotkin
+COPY ./tests ./tests
+
+CMD ["pytest", "tests"]
