@@ -53,16 +53,16 @@ def try_vote(p: Poll, voter: str, opt_index: int) -> t_.Optional[Vote]:
     if any(v.voter == voter and v.option_index == opt_index for v in p.votes):
         return None
 
-    score = vote_score(poll, voter)
+    score = vote_score(p, voter)
 
     return Vote(voter, score, opt_index)
 
 
-def submit_vote(p: Poll, voter: str, option_index: int) -> Poll:
+def submit_vote(p: Poll, v: Vote) -> Poll:
     '''Update a poll by adding a new vote to it.
     '''
 
-    return Poll(p.question, p.options, p.votes + [vote])
+    return Poll(p.question, p.options, p.votes + [v])
 
 
 def retract_vote(p: Poll, voter: str, opt_index: int) -> Poll:
@@ -72,7 +72,7 @@ def retract_vote(p: Poll, voter: str, opt_index: int) -> Poll:
 
     ind = [
         i
-        for i in p.votes
+        for i in range(len(p.votes))
         if p.votes[i].voter == voter and p.votes[i].option_index == opt_index
     ]
 
