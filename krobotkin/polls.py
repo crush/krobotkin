@@ -39,7 +39,7 @@ def vote_score(poll: Poll, voter: str) -> int:
     a particular voter on a given poll.
     '''
 
-    votes_submitted = len(v for v in poll.votes if v.voter == voter)
+    votes_submitted = len([v for v in poll.votes if v.voter == voter])
 
     return len(poll.options) - votes_submitted
 
@@ -58,7 +58,7 @@ def try_vote(p: Poll, voter: str, opt_index: int) -> t_.Optional[Vote]:
     return Vote(voter, score, opt_index)
 
 
-def submit_vote(p: Poll, voter: str, option_index: int -> Poll:
+def submit_vote(p: Poll, voter: str, option_index: int) -> Poll:
     '''Update a poll by adding a new vote to it.
     '''
 
