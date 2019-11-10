@@ -26,7 +26,7 @@ class Query:
     '''Identifiers for each query supported.
     '''
 
-    CREATE_TABLE$ = 0
+    CREATE_TABLE = 0
     CREATE_POLL = 1
     CREATE_OPTION = 2
     CREATE_VOTE = 3
