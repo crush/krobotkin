@@ -26,7 +26,7 @@ class Query:
     '''Identifiers for each query supported.
     '''
 
-    CREATE_TABLE = 0
+    CREATE_TABLES = 0
     CREATE_POLL = 1
     CREATE_OPTION = 2
     CREATE_VOTE = 3
@@ -36,6 +36,14 @@ class Query:
     DELETE_POLL = 7
     DELETE_OPTION = 8
     DELETE_VOTE = 9
+
+
+def init_db(cursor: sqlite.Cursor):
+    '''A SQLite-specific database initialization routine.
+    Should be called immediately after creating a database connection.
+    '''
+
+    cursor.execute(q_(Query.CREATE_TABLES))
 
 
 def store_fn(cursor: sqlite.Cursor) -> StorePollI:
