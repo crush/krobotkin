@@ -12,11 +12,10 @@ In order to run krobotkin, the only thing you'll need is [Docker](https://www.do
 All of the setup is handled via the [Makefile](./Makefile), which you'll need
 [make](http://man7.org/linux/man-pages/man1/make.1.html) to run.
 
-To run the bot, run the following command:
+The `make start` command will download the Python3.8 Docker image, build krobotkin,
+and then run the bot in a Docker container.
 
-```
-make start
-```
+# Testing
 
-At this point, you'll see Docker download the Python3.8 image and build krobotkin,
-which will output the message "Anarchism is order."
+The `make test` command will invoke the project's unit and integration tests in a
+Docker container built from a separate image from the one created to run the bot in.
