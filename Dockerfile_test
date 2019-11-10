@@ -11,4 +11,6 @@ RUN pip install --no-cache-dir -r requirements_dev.txt
 COPY ./krobotkin ./krobotkin
 COPY ./tests ./tests
 
+RUN ls -R .
+
 CMD ["pytest", "tests"]
