@@ -43,7 +43,7 @@ def init_db(cursor: sqlite.Cursor):
     Should be called immediately after creating a database connection.
     '''
 
-    cursor.execute(q_(Query.CREATE_TABLES))
+    cursor.execute(_q(Query.CREATE_TABLES), ())
 
 
 def store_fn(cursor: sqlite.Cursor) -> StorePollI:
@@ -111,21 +111,21 @@ def _update_poll(cursor: sqlite.Cursor, e: Entity, poll: polls.Poll) -> Entity:
     return e
 
 def _retrieve_poll(cursor: sqlite.Cursor, ent: Entity) -> t_.Optional[polls.Poll]:
-    cursor.execute(q_(Query.GET_QUESTIONS), (ent,))
+    cursor.execute(_q(Query.GET_QUESTIONS), (ent,))
 
     options = sorted([
         (index, option)
         for (_, index, option) in cursor.fetchall()
     ])
 
-    cursor.execute(q_(Query.GET_VOTES), (ent,))
+    cursor.execute(_q(Query.GET_VOTES), (ent,))
 
     votes = [
         (voter, score, option_index)
         for (_, voter, score, option_index) in cursor.fetchall()
     ]
 
-    cursor.execute(q_(Query.GET_POLL), (ent,))
+    cursor.execute(_q(Query.GET_POLL), (ent,))
 
     (question,) = cursor.fetchone()
 
@@ -137,12 +137,12 @@ def _retrieve_poll(cursor: sqlite.Cursor, ent: Entity) -> t_.Optional[polls.Poll
 
 def _delete_poll(cursor: sqlite.Cursor, e: Entity, poll: polls.Poll) -> Entity:
     for vote in poll.votes:
-        cursor.execute(q_(Query.DELETE_VOTE), (e, vote.voter))
+        cursor.execute(_q(Query.DELETE_VOTE), (e, vote.voter))
 
     for option in poll.options:
-        cursor.execute(q_(Query.DELETE_OPTION), (e, option))
+        cursor.execute(_q(Query.DELETE_OPTION), (e, option))
 
-    cursor.execute(q_(Query.DELETE_POLL), (e,))
+    cursor.execute(_q(Query.DELETE_POLL), (e,))
 
     return e
 
